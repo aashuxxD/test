@@ -10,7 +10,7 @@ from youtubesearchpython.__future__ import VideosSearch
 
 from StrangerMusic.utils.database.mongodatabase import add_private_chat
 import config
-from config import BANNED_USERS, MAX_USERS
+from config import BANNED_USERS, MAX_USERS, MAX_USERS_MESSAGE
 from config.config import OWNER_ID
 from strings import get_command, get_string
 from StrangerMusic import Telegram, YouTube, app
@@ -239,8 +239,7 @@ async def welcome(client, message: Message):
     if count < MAX_USERS:
         OWNER = OWNER_ID[0]
         btn = pvt_bot(OWNER)
-        return await message.reply_text(
-                    "**Private Music Bot**\n\nOnly for authorized chats from the owner. Ask my owner to allow your chat first.",
+        return await message.reply_text(MAX_USERS_MESSAGE,
                     reply_markup=InlineKeyboardMarkup(btn)
                 )
 

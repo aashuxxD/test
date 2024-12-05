@@ -88,6 +88,7 @@ AUTO_SUGGESTION_MODE = getenv("AUTO_SUGGESTION_MODE", None)
 PRIVATE_BOT_MODE = getenv("PRIVATE_BOT_MODE", None)
 
 MAX_USERS = int(getenv("MAX_USERS", 1))
+MAX_USERS_MESSAGE = getenv("MAX_USERS_MESSAGE", "**Private Music Bot**\n\nOnly for authorized chats from the owner. Ask my owner to allow your chat first.")
 
 
 # Time sleep duration For Youtube Downloader

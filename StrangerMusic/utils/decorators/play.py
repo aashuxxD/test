@@ -3,7 +3,7 @@ from pyrogram.enums import ChatMemberStatus
 
 from StrangerMusic.utils.database.mongodatabase import add_private_chat
 from StrangerMusic.utils.inline.start import pvt_bot
-from config import PLAYLIST_IMG_URL, PRIVATE_BOT_MODE, adminlist, OWNER_ID, MAX_USERS
+from config import PLAYLIST_IMG_URL, PRIVATE_BOT_MODE, adminlist, OWNER_ID, MAX_USERS, MAX_USERS_MESSAGE
 from strings import get_string
 from StrangerMusic import YouTube, app
 from StrangerMusic.misc import SUDOERS
@@ -28,7 +28,7 @@ def PlayWrapper(command):
             OWNER = OWNER_ID[0]
             btn = pvt_bot(OWNER)
             return await message.reply_text(
-                    "**Private Music Bot**\n\nOnly for authorized chats from the owner. Ask my owner to allow your chat first.",
+                    MAX_USERS_MESSAGE,
                     reply_markup=InlineKeyboardMarkup(btn)
                 )
 
