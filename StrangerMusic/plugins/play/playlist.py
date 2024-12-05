@@ -39,8 +39,8 @@ async def check_playlist(client, message: Message, _):
         return await message.reply_text(_["playlist_3"])
     msg = _["playlist_4"]
     count = 0
-    for shikhar in _playlist:
-        _note = await get_playlist(message.from_user.id, shikhar)
+    for sparrow in _playlist:
+        _note = await get_playlist(message.from_user.id, sparrow)
         title = _note["title"]
         title = title.title()
         duration = _note["duration"]
