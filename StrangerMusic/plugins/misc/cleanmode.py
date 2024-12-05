@@ -11,7 +11,7 @@ from pyrogram.types import Message,ChatPrivileges
 
 from typing import Dict, Set
 import config
-from config import adminlist, chatstats, clean, userstats, file_cache, CACHE_DURATION, autoclean
+from config import adminlist, chatstats, clean, userstats, file_cache, CACHE_DURATION, autoclean, CACHE_SLEEP
 from strings import get_command
 from StrangerMusic import app, userbot
 from StrangerMusic.misc import SUDOERS
@@ -32,7 +32,6 @@ AUTO_DELETE = config.CLEANMODE_DELETE_MINS
 AUTO_SLEEP = 5
 IS_BROADCASTING = False
 cleanmode_group = 15
-CACHE_SLEEP = 5
 
 @app.on_raw_update(group=cleanmode_group)
 async def clean_mode(client, update, users, chats):

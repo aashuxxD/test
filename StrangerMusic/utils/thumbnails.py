@@ -115,7 +115,7 @@ async def gen_thumb(videoid,user_id):
         x= changeImageSize(270,270,circle(xp))
         background.paste(x, (960,240), mask=x)
         b=ImageDraw.Draw(background)
-        b.pieslice([(960,240), (1230,510)], 0, 360,outline ='black',width=10)
+        b.pieslice([(960,240), (1230,510)], 0, 360,outline ='white',width=10)
     
         draw=ImageDraw.Draw(background)
         font = ImageFont.truetype("assets/TiltWarp-Regular.ttf",35)
@@ -128,7 +128,7 @@ async def gen_thumb(videoid,user_id):
         para = textwrap.wrap(title, width=32)
         j = 0
         draw.text(
-                    (30,10),
+                    (10,10),
                     f"{MUSIC_BOT_NAME}",
                     fill="white",
                     stroke_width=5,
@@ -190,14 +190,14 @@ async def gen_thumb(videoid,user_id):
                 font=name_font,
         )
         draw.text(
-            (50, 600),
+            (30, 600),
             f"00:55 ─────────────●─────────────────────────────────────────── {duration}",
             (255, 255, 255),
             font=font3,
         
         )
         draw.text(
-                (50,650),
+                (30,650),
                 f"Volume: ■■■■■□□□                      ↻      ◁     II    ▷     ↺",
                 (255, 255, 255),
                 font=font4,
