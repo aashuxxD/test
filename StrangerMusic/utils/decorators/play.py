@@ -3,7 +3,7 @@ from pyrogram.enums import ChatMemberStatus
 
 from StrangerMusic.utils.database.mongodatabase import add_private_chat
 from StrangerMusic.utils.inline.start import pvt_bot
-from config import PLAYLIST_IMG_URL, PRIVATE_BOT_MODE, adminlist,PRIVATE_BOT_MODE_MEM, OWNER_ID
+from config import PLAYLIST_IMG_URL, PRIVATE_BOT_MODE, adminlist, OWNER_ID, MAX_USERS
 from strings import get_string
 from StrangerMusic import YouTube, app
 from StrangerMusic.misc import SUDOERS
@@ -24,19 +24,18 @@ def PlayWrapper(command):
                     "Bot is under maintenance. Please wait for some time... \n Untill use our other bots and enjoy music \n @fallen_MusicBot \n@Sykkunobot"
                 )
         mem_count = await app.get_chat_members_count(message.chat.id)
-        if PRIVATE_BOT_MODE == str(True):
-            if mem_count > PRIVATE_BOT_MODE_MEM:
-                await add_private_chat(message.chat.id)
-            elif not await is_served_private_chat(message.chat.id):
-                try:
-                    await app.resolve_peer(OWNER_ID[0])
-                    OWNER = OWNER_ID[0]
-                except :
-                    OWNER = None
-                btn = pvt_bot(OWNER)
-                await message.reply_text(
+        if mem_count < MAX_USERS:
+            OWNER = OWNER_ID[0]
+            btn = pvt_bot(OWNER)
+            return await message.reply_text(
                     "**Private Music Bot**\n\nOnly for authorized chats from the owner. Ask my owner to allow your chat first.",
                     reply_markup=InlineKeyboardMarkup(btn)
+                )
+
+        if PRIVATE_BOT_MODE == str(True):
+            if not await is_served_private_chat(message.chat.id):
+                await message.reply_text(
+                    "**Private Music Bot**\n\nOnly for authorized chats from the owner. Ask my owner to allow your chat first."
                 )
                 return await app.leave_chat(message.chat.id)
             

@@ -10,7 +10,7 @@ from youtubesearchpython.__future__ import VideosSearch
 
 from StrangerMusic.utils.database.mongodatabase import add_private_chat
 import config
-from config import BANNED_USERS
+from config import BANNED_USERS, MAX_USERS
 from config.config import OWNER_ID
 from strings import get_command, get_string
 from StrangerMusic import Telegram, YouTube, app
@@ -236,23 +236,20 @@ welcome_group = 2
 async def welcome(client, message: Message):
     chat_id = message.chat.id
     count = await app.get_chat_members_count(chat_id)
+    if count < MAX_USERS:
+        OWNER = OWNER_ID[0]
+        btn = pvt_bot(OWNER)
+        return await message.reply_text(
+                    "**Private Music Bot**\n\nOnly for authorized chats from the owner. Ask my owner to allow your chat first.",
+                    reply_markup=InlineKeyboardMarkup(btn)
+                )
 
     if config.PRIVATE_BOT_MODE == str(True):
-        if count > config.PRIVATE_BOT_MODE_MEM:
-            await add_private_chat(chat_id)
-        elif not await is_served_private_chat(message.chat.id):
-            try:
-                await app.resolve_peer(OWNER_ID[0])
-                OWNER = OWNER_ID[0]
-            except :
-                OWNER = None
-            btn = pvt_bot(OWNER)
+        if not await is_served_private_chat(message.chat.id):
             await message.reply_text(
-                "**Private Music Bot**\n\nOnly for authorized chats from the owner. Ask my owner to allow your chat first.",
-                reply_markup=InlineKeyboardMarkup(btn)
+                "**Private Music Bot**\n\nOnly for authorized chats from the owner. Ask my owner to allow your chat first."
             )
             return await app.leave_chat(message.chat.id)
-        
     else:
         await add_served_chat(chat_id)
     for member in message.new_chat_members:
