@@ -13,8 +13,8 @@ from StrangerMusic.utils.database import get_loop
 from StrangerMusic.utils.decorators import AdminRightsCheck
 from StrangerMusic.utils.inline.play import (stream_markup,
                                           telegram_markup)
-from StrangerMusic.utils.stream.autoclear import auto_clean
 from StrangerMusic.utils.thumbnails import gen_thumb
+from config import autoclean
 
 # Commands
 SKIP_COMMAND = get_command("SKIP_COMMAND")
@@ -49,11 +49,9 @@ async def skip(cli, message: Message, _, chat_id):
                                     _["admin_16"]
                                 )
                             if popped:
-                                if (
-                                    config.AUTO_DOWNLOADS_CLEAR
-                                    == str(True)
-                                ):
-                                    await auto_clean(popped)
+                                if config.AUTO_DOWNLOADS_CLEAR == str(True):
+                                    rem = popped["file"]
+                                    autoclean.remove(rem)
                             if not check:
                                 try:
                                     await message.reply_text(
@@ -82,7 +80,8 @@ async def skip(cli, message: Message, _, chat_id):
             popped = check.pop(0)
             if popped:
                 if config.AUTO_DOWNLOADS_CLEAR == str(True):
-                    await auto_clean(popped)
+                    rem = popped["file"]
+                    autoclean.remove(rem)
             if not check:
                 await message.reply_text(
                     _["admin_10"].format(message.from_user.first_name,message.chat.title)

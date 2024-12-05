@@ -1,5 +1,5 @@
-
-
+import os
+import time
 import asyncio
 from datetime import datetime, timedelta
 
@@ -9,8 +9,9 @@ from pyrogram.enums import ChatMembersFilter
 from pyrogram.raw import types
 from pyrogram.types import Message,ChatPrivileges
 
+from typing import Dict, Set
 import config
-from config import adminlist, chatstats, clean, userstats
+from config import adminlist, chatstats, clean, userstats, file_cache, CACHE_DURATION, autoclean
 from strings import get_command
 from StrangerMusic import app, userbot
 from StrangerMusic.misc import SUDOERS
@@ -31,7 +32,7 @@ AUTO_DELETE = config.CLEANMODE_DELETE_MINS
 AUTO_SLEEP = 5
 IS_BROADCASTING = False
 cleanmode_group = 15
-
+CACHE_SLEEP = 5
 
 @app.on_raw_update(group=cleanmode_group)
 async def clean_mode(client, update, users, chats):
@@ -87,6 +88,7 @@ async def braodcast_message(client, message:Message, _):
             return await message.reply_text(_["broad_6"])
 
     IS_BROADCASTING = True
+    await message.reply_text("Broadcasting...")
 
     # Bot broadcast inside chats
     if "-nobot" not in message.text:
@@ -191,7 +193,7 @@ async def braodcast_message(client, message:Message, _):
     IS_BROADCASTING = False
 
 
-async def auto_clean():
+async def auto_clean_msg():
     while not await asyncio.sleep(AUTO_SLEEP):
         try:
             for chat_id in chatstats:
@@ -272,4 +274,34 @@ async def auto_clean():
             continue
 
 
-asyncio.create_task(auto_clean())
+
+  # Sleep duration between cache cleanup checks
+
+
+async def auto_clean_cache():
+    """Periodically clean up expired files"""
+    while not await asyncio.sleep(CACHE_SLEEP):
+        try:
+            current_time = time.time()
+            expired_files = [
+                file_path
+                for file_path, last_access in file_cache.items()
+                if current_time - last_access > CACHE_DURATION
+                and file_path not in autoclean
+            ]
+            
+            for file_path in expired_files:
+                try:
+                    if os.path.exists(file_path):
+                        os.remove(file_path)
+                        file_cache.pop(file_path, None)
+                except:
+                    continue
+        except:
+            continue
+        
+
+
+asyncio.create_task(auto_clean_cache())
+
+asyncio.create_task(auto_clean_msg())

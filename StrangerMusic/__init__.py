@@ -1,5 +1,3 @@
-
-
 from StrangerMusic.core.bot import StrangerBot
 from StrangerMusic.core.dir import dirr
 from StrangerMusic.core.git import git

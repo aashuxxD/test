@@ -21,9 +21,9 @@ from StrangerMusic.utils.inline.play import (panel_markup_1,
                                           panel_markup_3,
                                           stream_markup,
                                           telegram_markup)
-from StrangerMusic.utils.stream.autoclear import auto_clean
 from StrangerMusic.utils.thumbnails import gen_thumb
 from StrangerMusic.utils.inline import close_markup
+from config import autoclean
 
 wrong = {}
 
@@ -223,7 +223,8 @@ async def del_back_playlist(client, CallbackQuery:CallbackQuery, _):
             popped = check.pop(0)
             if popped:
                 if AUTO_DOWNLOADS_CLEAR == str(True):
-                    await auto_clean(popped)
+                    rem = popped["file"]
+                    autoclean.remove(rem)
             if not check:
                 await CallbackQuery.edit_message_text(
                     f"Skipped by {mention}",reply_markup=close_markup(_)

@@ -1,5 +1,3 @@
-
-
 import re
 import sys
 from os import getenv
@@ -129,16 +127,17 @@ TG_VIDEO_FILESIZE_LIMIT = int(
     getenv("TG_VIDEO_FILESIZE_LIMIT", "1073741824")
 )  # Remember to give value in bytes
 
-# YTDL options keep only one true 
-TOKEN_ALLOW = str(getenv("TOKEN_ALLOW" , False))
-PO_TOKEN_ALLOW = str(getenv("PO_TOKEN_ALLOW" , False))
-PO_TOKEN = getenv("PO_TOKEN" , None)
+
+
+# TUBED_API key
+TUBED_API = getenv("TUBED_API" , None)
+CACHE_DURATION = int(getenv("CACHE_DURATION" , "60"))
 
 # If you want your bot to setup the commands automatically in the bot's menu set it to true.
 # Refer to https://i.postimg.cc/Bbg3LQTG/image.png
 SET_CMDS = getenv("SET_CMDS", False)
 
-# You'll need a Pyrogram String Session for these vars. Generate String from our session generator bot @string_puiibot
+# You'll need a Pyrogram String Session for these vars.
 STRING1 = getenv("STRING_SESSION", None)
 STRING2 = getenv("STRING_SESSION2", None)
 STRING3 = getenv("STRING_SESSION3", None)
@@ -146,14 +145,12 @@ STRING4 = getenv("STRING_SESSION4", None)
 STRING5 = getenv("STRING_SESSION5", None)
 
 
-#  __     ___    _ _  ___  _______   __  __ _    _  _____ _____ _____   ____   ____ _______
-#  \ \   / / |  | | |/ / |/ /_   _| |  \/  | |  | |/ ____|_   _/ ____| |  _ \ / __ \__   __|
-#   \ \_/ /| |  | | ' /| ' /  | |   | \  / | |  | | (___   | || |      | |_) | |  | | | |
-#    \   / | |  | |  < |  <   | |   | |\/| | |  | |\___ \  | || |      |  _ <| |  | | | |
-#     | |  | |__| | . \| . \ _| |_  | |  | | |__| |____) |_| || |____  | |_) | |__| | | |
-#     |_|   \____/|_|\_\_|\_\_____| |_|  |_|\____/|_____/|_____\_____| |____/ \____/  |_|
-
-
+#   _____ _______ _____            _   _  _____ ______ _____   __  __ _    _ _____ _____ _____ 
+#  / ____|__   __|  __ \     /\   | \ | |/ ____|  ____|  __ \  |  \/  | |  | |/ ____|_   _/ ____|
+# | (___    | |  | |__) |   /  \  |  \| | |  __| |__  | |__)   | \  / | |  | | (___   | || |    
+#  \___ \   | |  |  _  /   / /\ \ | . ` | | |_ |  __| |  _  /  | |\/| | |  | |\___ \  | || |    
+#  ____) |  | |  | | \ \  / ____ \| |\  | |__| | |____| | \ \  | |  | | |__| |____) |_| || |____ 
+# |_____/   |_|  |_|  \_\/_/    \_\_| \_|\_____|______|_|  \_\ |_|  |_|\____/|_____/|_____\_____|
 
 ### DONT TOUCH or EDIT codes after this line
 BANNED_USERS = filters.user()
@@ -166,7 +163,7 @@ chatstats = {}
 userstats = {}
 clean = {}
 autoclean = []
-
+file_cache: dict[str, float] = {}
 
 # Images
 START_IMG_URL = getenv("START_IMG_URL", None)

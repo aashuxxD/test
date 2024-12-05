@@ -1,6 +1,0 @@
-# Netscape HTTP Cookie File
-# http://curl.haxx.se/rfc/cookie_spec.html
-# This is a generated file!  Do not edit.
-
-.youtube.com	TRUE	/	FALSE	1738940961	_gcl_au	1.1.1997878603.1731164961
-.youtube.com	TRUE	/	TRUE	1765729337	PREF	repeat=NONE&autoplay=true

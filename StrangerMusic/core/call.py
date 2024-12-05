@@ -1,5 +1,3 @@
-
-
 import asyncio
 from datetime import datetime, timedelta
 from typing import Union
@@ -36,8 +34,8 @@ from StrangerMusic.utils.database import (add_active_chat,
 from StrangerMusic.utils.exceptions import AssistantErr
 from StrangerMusic.utils.inline.play import (stream_markup,
                                           telegram_markup)
-from StrangerMusic.utils.stream.autoclear import auto_clean
 from StrangerMusic.utils.thumbnails import gen_thumb
+from config import autoclean
 
 autoend = {}
 counter = {}
@@ -329,7 +327,8 @@ class Call(PyTgCalls):
                 await set_loop(chat_id, loop)
             if popped:
                 if config.AUTO_DOWNLOADS_CLEAR == str(True):
-                    await auto_clean(popped)
+                    rem = popped["file"]
+                    autoclean.remove(rem)
             if not check:
                 await _clear_(chat_id)
                 return await client.leave_group_call(chat_id)
@@ -627,6 +626,5 @@ class Call(PyTgCalls):
                     )
                     return
                 autoend[chat_id] = {}
-
 
 Stranger = Call()
