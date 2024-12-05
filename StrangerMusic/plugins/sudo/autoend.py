@@ -73,5 +73,4 @@ async def groupinfo(client, message: Message):
         await message.reply_text(info_text)
         
     except Exception as e:
-        print(e)
         await message.reply_text(f"An error occurred: {str(e)}")
