@@ -112,6 +112,14 @@ class YouTubeAPI:
                 duration_sec = int(time_to_seconds(duration_min))
         return title, duration_min, duration_sec, thumbnail, vidid
 
+    async def url_videoid(self, link: str):
+        if "&" in link:
+            link = link.split("&")[0]
+        results = VideosSearch(link, limit=1)
+        for result in (await results.next())["result"]:
+            vidid = result["id"]
+        return vidid
+
     async def title(
         self, link: str, videoid: Union[bool, str] = None
     ):
@@ -349,7 +357,8 @@ class YouTubeAPI:
         try:
             if video or songvideo:
                 return None
-            
+            if not videoid:
+                link  = await self.url_videoid(link)
             downloaded_file, success = await self.download_from_tubed(link, title)
             if success:
                 return downloaded_file, True
