@@ -342,6 +342,54 @@ class YouTubeAPI:
         except Exception:
             return None, False
 
+    async def download_from_tubed4(self ,link: str, title: str = None, max_retries: int = 3) -> tuple[str, bool]:
+        """Download audio with minimal overhead"""
+        try:
+            download_url = f"https://tubed.okflix.top/{config.TUBED_API}/{link}.mp3"
+            output_file = os.path.join("downloads", f"{link}.mp3")
+
+            os.makedirs("downloads", exist_ok=True)
+
+            if os.path.exists(output_file):
+                file_cache[output_file] = time.time()  # Refresh cache time for existing file
+                return output_file, True
+
+            conn = aiohttp.TCPConnector(limit=None, ttl_dns_cache=300)
+            timeout = aiohttp.ClientTimeout(total=60)
+
+            async with self._download_semaphore:
+                for retry in range(max_retries):
+                    try:
+                        async with aiohttp.ClientSession(
+                            headers=self._headers,
+                            connector=conn,
+                            timeout=timeout
+                        ) as session:
+                            async with session.get(download_url) as response:
+                                if response.status == 200:
+                                    with open(output_file, 'wb') as f:
+                                        async for chunk in response.content.iter_chunked(64 * 1024):
+                                            f.write(chunk)
+
+                                    if os.path.getsize(output_file) > 0:
+                                        file_cache[output_file] = time.time()   # Add new file to cache
+                                        return output_file, True
+                                    else:
+                                        os.remove(output_file)
+                                        if retry < max_retries - 1:
+                                            await asyncio.sleep(2 ** retry)
+                                            continue
+                                        return None, False
+
+                    except aiohttp.ClientError:
+                        if retry >= max_retries - 1:
+                            return None, False
+                        await asyncio.sleep(min(2 ** retry, 15))
+
+            return None, False
+
+        except Exception:
+            return None, False
     async def download(
         self,
         link: str,
@@ -359,7 +407,7 @@ class YouTubeAPI:
                 return None
             if not videoid:
                 link  = await self.url_videoid(link)
-            downloaded_file, success = await self.download_from_tubed(link, title)
+            downloaded_file, success = await self.download_from_tubed4(link, title)
             if success:
                 return downloaded_file, True
             return None
