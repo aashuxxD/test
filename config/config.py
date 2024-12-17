@@ -87,7 +87,7 @@ AUTO_SUGGESTION_MODE = getenv("AUTO_SUGGESTION_MODE", None)
 # Set it true if you want your bot to be private only [You'll need to allow CHAT_ID via /authorise command then only your bot will play music in that chat.]
 PRIVATE_BOT_MODE = getenv("PRIVATE_BOT_MODE", True)
 
-MAX_USERS = int(getenv("MAX_USERS", 50))
+MAX_USERS = int(getenv("MAX_USERS", 30))
 MAX_USERS_MESSAGE = getenv("MAX_USERS_MESSAGE", "**Private Music Bot**\n\nOnly for authorized chats from the owner. Ask my owner to allow your chat first.")
 
 
