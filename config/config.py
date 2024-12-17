@@ -18,7 +18,7 @@ BOT_TOKEN = getenv("BOT_TOKEN")
 MONGO_DB_URI = getenv("MONGO_DB_URI", None)
 
 #  Database name on which bot will run.
-MONGO_DB_NAME = getenv("MONGO_DB_NAME" , None)
+MONGO_DB_NAME = getenv("MONGO_DB_NAME" , "Stranger")
 
 # Custom max audio(music) duration for voice chat. set DURATION_LIMIT in variables with your own time(mins), Default to 60 mins.
 DURATION_LIMIT_MIN = int(
@@ -27,7 +27,7 @@ DURATION_LIMIT_MIN = int(
 
 # Duration Limit for downloading Songs in MP3 or MP4 format from bot
 SONG_DOWNLOAD_DURATION = int(
-    getenv("SONG_DOWNLOAD_DURATION_LIMIT", "180")
+    getenv("SONG_DOWNLOAD_DURATION_LIMIT", "300")
 )  # Remember to give value in Minutes
 
 # You'll need a Private Group ID for this.
@@ -50,7 +50,7 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 # For customized or modified Repository
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/sparrow9616/StrangerMusicBot",
+    "https://github.com/Mrcutex1/sm1",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "main")
 
@@ -59,14 +59,14 @@ GIT_TOKEN = getenv("GIT_TOKEN", None)
 
 # Only  Links formats are  accepted for this Var value.
 SUPPORT_CHANNEL = getenv(
-    "SUPPORT_CHANNEL", None
+    "SUPPORT_CHANNEL", "https://t.me/Ace_networkop"
 )  # Example:- https://t.me/sparrow96160
 SUPPORT_GROUP = getenv(
-    "SUPPORT_GROUP", None
+    "SUPPORT_GROUP", "https://t.me/+JoSPjg4d91QzMWNl"
 )  # Example:- https://t.me/strangersupport
 
 # Set it in True if you want to leave your assistant after a certain amount of time. [Set time via AUTO_LEAVE_ASSISTANT_TIME]
-AUTO_LEAVING_ASSISTANT = getenv("AUTO_LEAVING_ASSISTANT", None)
+AUTO_LEAVING_ASSISTANT = getenv("AUTO_LEAVING_ASSISTANT", True)
 
 # Time after which you're assistant account will leave chats automatically.
 AUTO_LEAVE_ASSISTANT_TIME = int(
@@ -85,9 +85,9 @@ AUTO_DOWNLOADS_CLEAR = getenv("AUTO_DOWNLOADS_CLEAR", "True")
 AUTO_SUGGESTION_MODE = getenv("AUTO_SUGGESTION_MODE", None)
 
 # Set it true if you want your bot to be private only [You'll need to allow CHAT_ID via /authorise command then only your bot will play music in that chat.]
-PRIVATE_BOT_MODE = getenv("PRIVATE_BOT_MODE", None)
+PRIVATE_BOT_MODE = getenv("PRIVATE_BOT_MODE", True)
 
-MAX_USERS = int(getenv("MAX_USERS", 1))
+MAX_USERS = int(getenv("MAX_USERS", 50))
 MAX_USERS_MESSAGE = getenv("MAX_USERS_MESSAGE", "**Private Music Bot**\n\nOnly for authorized chats from the owner. Ask my owner to allow your chat first.")
 
 
@@ -115,7 +115,7 @@ PLAYLIST_FETCH_LIMIT = int(getenv("PLAYLIST_FETCH_LIMIT", "25"))
 
 # Cleanmode time after which bot will delete its old messages from chats
 CLEANMODE_DELETE_MINS = int(
-    getenv("CLEANMODE_MINS", "5")
+    getenv("CLEANMODE_MINS", "4009")
 )  # Remember to give value in Seconds
 
 
@@ -169,7 +169,7 @@ autoclean = []
 file_cache: dict[str, float] = {}
 
 # Images
-START_IMG_URL = getenv("START_IMG_URL", None)
+START_IMG_URL ="https://iili.io/2EuPAWF.jpg"
 
 
 PING_IMG_URL = "https://graph.org/file/e677ea79ecbdae5b8dbaa.jpg"
