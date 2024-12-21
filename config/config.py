@@ -133,8 +133,8 @@ TG_VIDEO_FILESIZE_LIMIT = int(
 
 # TUBED_API key
 TUBED_API = getenv("TUBED_API" , None)
-CACHE_DURATION = int(getenv("CACHE_DURATION" , "00"))  #60*60*24
-CACHE_SLEEP = int(getenv("CACHE_SLEEP" , "00"))   #60*60
+CACHE_DURATION = int(getenv("CACHE_DURATION" , "86400"))  #60*60*24
+CACHE_SLEEP = int(getenv("CACHE_SLEEP" , "3600"))   #60*60
 
 # If you want your bot to setup the commands automatically in the bot's menu set it to true.
 # Refer to https://i.postimg.cc/Bbg3LQTG/image.png
