@@ -1,9 +1,9 @@
 import asyncio
 import os
 import re
+import json
 from typing import Union
-from pytgcalls.types.input_stream import InputStream
-from pytgcalls.types.input_stream import InputAudioStream
+
 
 import yt_dlp
 from pyrogram.enums import MessageEntityType
