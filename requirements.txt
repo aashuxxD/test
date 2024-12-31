@@ -12,7 +12,7 @@ motor
 numpy
 pillow
 psutil
-py-tgcalls==2.0.3
+py-tgcalls==2.0.6
 pykeyboard
 # pyrogram
 git+https://github.com/KurimuzonAkuma/pyrogram.git

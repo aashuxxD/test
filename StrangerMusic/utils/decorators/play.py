@@ -1,5 +1,5 @@
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup,Message
-from pyrogram.enums import ChatMemberStatus
+from pyrogram.enums import ChatMemberStatus, ParseMode
 
 from StrangerMusic.utils.database.mongodatabase import add_private_chat
 from StrangerMusic.utils.inline.start import pvt_bot
@@ -29,7 +29,8 @@ def PlayWrapper(command):
             btn = pvt_bot(OWNER)
             return await message.reply_text(
                     MAX_USERS_MESSAGE,
-                    reply_markup=InlineKeyboardMarkup(btn)
+                    reply_markup=InlineKeyboardMarkup(btn),
+                    parse_mode=ParseMode.DEFAULT
                 )
 
         if PRIVATE_BOT_MODE == str(True):

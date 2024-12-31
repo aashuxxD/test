@@ -626,7 +626,7 @@ class Call(PyTgCalls):
             else:
                 final = (
                     users + 1
-                    if isinstance(update, GroupCallParticipant.Action.JOINED)
+                    if str(update.participant.action) == "Action.JOINED"
                     else users - 1
                 )
                 counter[chat_id] = final
