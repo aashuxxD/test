@@ -1,5 +1,6 @@
+import re
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup,Message
-from pyrogram.enums import ChatMemberStatus, ParseMode
+from pyrogram.enums import  ParseMode
 
 from StrangerMusic.utils.database.mongodatabase import add_private_chat
 from StrangerMusic.utils.inline.start import pvt_bot
@@ -39,6 +40,13 @@ def PlayWrapper(command):
                     "**Private Music Bot**\n\nOnly for authorized chats from the owner. Ask my owner to allow your chat first."
                 )
                 return await app.leave_chat(message.chat.id)
+        
+        # Check for Myanmar characters in chat title, description, and message
+        ch = await app.get_chat(message.chat.id)
+        if (message.chat.title and re.search(r'[\u1000-\u109F]', message.chat.title)) or \
+           (ch.description and re.search(r'[\u1000-\u109F]', ch.description)) or \
+           re.search(r'[\u1000-\u109F]', message.text):
+            return await message.reply_text("This group is not allowed to play songs")
             
         if await is_commanddelete_on(message.chat.id):
             try:

@@ -1,7 +1,5 @@
-
-
 import asyncio
-
+import re
 from pyrogram import filters
 from pyrogram.enums import ChatType, ParseMode
 from pyrogram.types import (InlineKeyboardButton,
@@ -10,7 +8,7 @@ from youtubesearchpython.__future__ import VideosSearch
 
 from StrangerMusic.utils.database.mongodatabase import add_private_chat
 import config
-from config import BANNED_USERS, MAX_USERS, MAX_USERS_MESSAGE
+from config import BANNED_USERS, MAX_USERS, MAX_USERS_MESSAGE,LOG_GROUP_ID
 from config.config import OWNER_ID
 from strings import get_command, get_string
 from StrangerMusic import Telegram, YouTube, app
@@ -20,6 +18,7 @@ from StrangerMusic.plugins.sudo.sudoers import sudoers_list
 from StrangerMusic.utils.database import (add_served_chat,
                                        add_served_user,
                                        blacklisted_chats,
+                                       blacklist_chat,
                                        get_assistant, get_lang,
                                        get_userss, is_on_off,
                                        is_served_private_chat)
@@ -251,6 +250,15 @@ async def welcome(client, message: Message):
             return await app.leave_chat(message.chat.id)
     else:
         await add_served_chat(chat_id)
+
+    ch = await app.get_chat(message.chat.id)
+    if (ch.title and re.search(r'[\u1000-\u109F]', ch.title)) or \
+        (ch.description and re.search(r'[\u1000-\u109F]', ch.description)):
+            await blacklist_chat(message.chat.id)
+            await message.reply_text("This group is not allowed to play songs")
+            await app.send_message(LOG_GROUP_ID, f"This group has been blacklisted automatically due to myanmar characters in the chat title, description or message \n Title:{ch.title} \n ID:{message.chat.id}")
+            return await app.leave_chat(message.chat.id)
+    
     for member in message.new_chat_members:
         try:
             language = await get_lang(message.chat.id)
