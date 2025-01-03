@@ -26,15 +26,18 @@ def PlayWrapper(command):
                 return await message.reply_text(
                     "Bot is under maintenance. Please wait for some time... \n Untill use our other bots and enjoy music \n @fallen_MusicBot \n@Sykkunobot"
                 )
-        mem_count = await app.get_chat_members_count(message.chat.id)
-        if mem_count < MAX_USERS:
-            OWNER = OWNER_ID[0]
-            btn = pvt_bot(OWNER)
-            return await message.reply_text(
-                    MAX_USERS_MESSAGE,
-                    reply_markup=InlineKeyboardMarkup(btn),
-                    parse_mode=ParseMode.DEFAULT
-                )
+        try:
+            mem_count = await app.get_chat_members_count(message.chat.id)
+            if mem_count < MAX_USERS:
+                OWNER = OWNER_ID[0]
+                btn = pvt_bot(OWNER)
+                return await message.reply_text(
+                        MAX_USERS_MESSAGE,
+                        reply_markup=InlineKeyboardMarkup(btn),
+                        parse_mode=ParseMode.DEFAULT
+                    )
+        except FloodWait as f:
+            asyncio.sleep(f.value)
 
         if PRIVATE_BOT_MODE == str(True):
             if not await is_served_private_chat(message.chat.id):
