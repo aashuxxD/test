@@ -26,8 +26,11 @@ def PlayWrapper(command):
                 return await message.reply_text(
                     "Bot is under maintenance. Please wait for some time... \n Untill use our other bots and enjoy music \n @fallen_MusicBot \n@Sykkunobot"
                 )
+        
+                # Check for Myanmar characters in chat title, description, and message
         try:
-            mem_count = await app.get_chat_members_count(message.chat.id)
+            ch = await app.get_chat(message.chat.id)
+            mem_count = ch.members_count
             if mem_count < MAX_USERS:
                 OWNER = OWNER_ID[0]
                 btn = pvt_bot(OWNER)
@@ -36,6 +39,10 @@ def PlayWrapper(command):
                         reply_markup=InlineKeyboardMarkup(btn),
                         parse_mode=ParseMode.DEFAULT
                     )
+            if (message.chat.title and re.search(r'[\u1000-\u109F]', message.chat.title)) or \
+               (ch.description and re.search(r'[\u1000-\u109F]', ch.description)) or \
+               re.search(r'[\u1000-\u109F]', message.text):
+                return await message.reply_text("This group is not allowed to play songs")
         except FloodWait as f:
             asyncio.sleep(f.value)
 
@@ -46,15 +53,7 @@ def PlayWrapper(command):
                 )
                 return await app.leave_chat(message.chat.id)
         
-        # Check for Myanmar characters in chat title, description, and message
-        try:
-            ch = await app.get_chat(message.chat.id)
-            if (message.chat.title and re.search(r'[\u1000-\u109F]', message.chat.title)) or \
-               (ch.description and re.search(r'[\u1000-\u109F]', ch.description)) or \
-               re.search(r'[\u1000-\u109F]', message.text):
-                return await message.reply_text("This group is not allowed to play songs")
-        except FloodWait as f:
-            asyncio.sleep(f.value)
+
             
         if await is_commanddelete_on(message.chat.id):
             try:

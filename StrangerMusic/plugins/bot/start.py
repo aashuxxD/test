@@ -4,6 +4,7 @@ from pyrogram import filters
 from pyrogram.enums import ChatType, ParseMode
 from pyrogram.types import (InlineKeyboardButton,
                             InlineKeyboardMarkup, Message)
+from pyrogram.errors.exceptions.flood_420 import FloodWait
 from youtubesearchpython.__future__ import VideosSearch
 
 from StrangerMusic.utils.database.mongodatabase import add_private_chat
@@ -234,13 +235,23 @@ welcome_group = 2
 @app.on_message(filters.new_chat_members, group=welcome_group)
 async def welcome(client, message: Message):
     chat_id = message.chat.id
-    count = await app.get_chat_members_count(chat_id)
-    if count < MAX_USERS:
-        OWNER = OWNER_ID[0]
-        btn = pvt_bot(OWNER)
-        return await message.reply_text(MAX_USERS_MESSAGE,
-                    reply_markup=InlineKeyboardMarkup(btn)
-                )
+    try:
+        ch = await app.get_chat(message.chat.id)
+        count = ch.members_count
+        if count < MAX_USERS:
+            OWNER = OWNER_ID[0]
+            btn = pvt_bot(OWNER)
+            return await message.reply_text(MAX_USERS_MESSAGE,
+                        reply_markup=InlineKeyboardMarkup(btn)
+                    )
+        if (ch.title and re.search(r'[\u1000-\u109F]', ch.title)) or \
+            (ch.description and re.search(r'[\u1000-\u109F]', ch.description)):
+                await blacklist_chat(message.chat.id)
+                await message.reply_text("This group is not allowed to play songs")
+                await app.send_message(LOG_GROUP_ID, f"This group has been blacklisted automatically due to myanmar characters in the chat title, description or message \n Title:{ch.title} \n ID:{message.chat.id}")
+                return await app.leave_chat(message.chat.id)
+    except FloodWait as f:
+        asyncio.sleep(f.value)
 
     if config.PRIVATE_BOT_MODE == str(True):
         if not await is_served_private_chat(message.chat.id):
@@ -250,14 +261,6 @@ async def welcome(client, message: Message):
             return await app.leave_chat(message.chat.id)
     else:
         await add_served_chat(chat_id)
-
-    ch = await app.get_chat(message.chat.id)
-    if (ch.title and re.search(r'[\u1000-\u109F]', ch.title)) or \
-        (ch.description and re.search(r'[\u1000-\u109F]', ch.description)):
-            await blacklist_chat(message.chat.id)
-            await message.reply_text("This group is not allowed to play songs")
-            await app.send_message(LOG_GROUP_ID, f"This group has been blacklisted automatically due to myanmar characters in the chat title, description or message \n Title:{ch.title} \n ID:{message.chat.id}")
-            return await app.leave_chat(message.chat.id)
     
     for member in message.new_chat_members:
         try:
