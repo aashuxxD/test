@@ -6,7 +6,8 @@ from pyrogram import Client
 from pyrogram.errors import (
     ChatAdminRequired,
     UserAlreadyParticipant,
-    UserNotParticipant
+    UserNotParticipant,
+    ChannelInvalid
 )
 from pyrogram.types import InlineKeyboardMarkup
 from pyrogram.enums import ChatMemberStatus
@@ -279,6 +280,20 @@ class Call(PyTgCalls):
                 chat_id,
                 stream,
             )
+        except ChannelInvalid:
+            try:
+                await self.join_assistant(original_chat_id, chat_id)
+            except Exception as e:
+                raise e
+            try:
+                await assistant.play(
+                    chat_id,
+                    stream,
+                )
+            except Exception as e:
+                raise AssistantErr(
+                    "**No Active Voice Chat Found**\n\nPlease make sure group's voice chat is enabled. If already enabled, please end it and start fresh voice chat again and if the problem continues, try /restart"
+                )
         except NoActiveGroupCall:
             try:
                 await self.join_assistant(original_chat_id, chat_id)
