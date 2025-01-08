@@ -174,7 +174,7 @@ START_IMG_URL ="https://iili.io/2EuPAWF.jpg"
 
 PING_IMG_URL = "https://graph.org/file/e677ea79ecbdae5b8dbaa.jpg"
 
-PLAYLIST_IMG_URL = "https://graph.org/file/6267bdf12362e80f1811b.jpg"
+PLAYLIST_IMG_URL = "https://iili.io/2gb7G72.jpg"
 
 GLOBAL_IMG_URL = "https://graph.org/file/451add95a90955a01b6b0.jpg"
 
@@ -190,11 +190,11 @@ SOUNCLOUD_IMG_URL = "https://graph.org/file/8323f31b9adcb31aa3ac9.jpg"
 
 YOUTUBE_IMG_URL = "https://graph.org/file/2877f545cd176cc664361.jpg"
 
-SPOTIFY_ARTIST_IMG_URL = "https://graph.org/file/b20262a70056af814bd92.jpg"
+SPOTIFY_ARTIST_IMG_URL = "https://iili.io/2gb7G72.jpg"
 
-SPOTIFY_ALBUM_IMG_URL = "https://graph.org/file/b20262a70056af814bd92.jpg"
+SPOTIFY_ALBUM_IMG_URL = "https://iili.io/2gb7G72.jpg"
 
-SPOTIFY_PLAYLIST_IMG_URL = "https://graph.org/file/e09f92d651425e2257dee.jpg"
+SPOTIFY_PLAYLIST_IMG_URL = "https://iili.io/2gb7G72.jpg"
 
 def time_to_seconds(time):
     stringt = str(time)
