@@ -1,5 +1,3 @@
-
-
 import asyncio
 from datetime import datetime
 
@@ -11,7 +9,7 @@ from StrangerMusic.utils.database import (get_client, is_active_chat,
 from pyrogram.enums import ChatType
 
 async def auto_leave():
-    if config.AUTO_LEAVING_ASSISTANT == str(True):
+    if config.AUTO_LEAVING_ASSISTANT:
         while not await asyncio.sleep(
             config.AUTO_LEAVE_ASSISTANT_TIME
         ):
@@ -21,7 +19,7 @@ async def auto_leave():
                 client = await get_client(num)
                 left = 0
                 try:
-                    async for i in client.iter_dialogs():
+                    async for i in client.get_dialogs():
                         chat_type = i.chat.type
                         if chat_type in [
                             ChatType.SUPERGROUP,
@@ -35,7 +33,7 @@ async def auto_leave():
                                 and chat_id != -1001982005500
                                 #and chat_id != 
                             ):
-                                if left == 59:
+                                if left == 20:
                                     continue
                                 if not await is_active_chat(chat_id):
                                     try:
