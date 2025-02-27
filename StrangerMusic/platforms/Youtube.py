@@ -4,12 +4,11 @@ import re
 import json
 from typing import Union
 import requests
-
 import yt_dlp
 from pyrogram.enums import MessageEntityType
 from pyrogram.types import Message
 from youtubesearchpython.__future__ import VideosSearch
-
+from config import YTPROXY_URL as YTPROXY
 from StrangerMusic.utils.database import is_on_off
 from StrangerMusic.utils.formatters import time_to_seconds
 
