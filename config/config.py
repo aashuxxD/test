@@ -21,7 +21,7 @@ MONGO_DB_URI = getenv("MONGO_DB_URI", None)
 YTPROXY_URL = getenv("YTPROXY_URL", 'https://yt.okflix.top/api') ## E.G https://yt.okflix
 
 #  Database name on which bot will run.
-MONGO_DB_NAME = getenv("MONGO_DB_NAME" , "Anon")
+MONGO_DB_NAME = getenv("MONGO_DB_NAME" , "Stranger")
 
 # Custom max audio(music) duration for voice chat. set DURATION_LIMIT in variables with your own time(mins), Default to 60 mins.
 DURATION_LIMIT_MIN = int(
@@ -53,7 +53,7 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 # For customized or modified Repository
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/Mrcutex1/sm1",
+    "https://github.com/aashuxxD/test",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "main")
 
@@ -65,7 +65,7 @@ SUPPORT_CHANNEL = getenv(
     "SUPPORT_CHANNEL", "https://t.me/Ace_networkop"
 )  # Example:- https://t.me/sparrow96160
 SUPPORT_GROUP = getenv(
-    "SUPPORT_GROUP", "https://t.me/+JoSPjg4d91QzMWNl"
+    "SUPPORT_GROUP", "https://t.me/Saykkunomusic"
 )  # Example:- https://t.me/strangersupport
 
 # Set it in True if you want to leave your assistant after a certain amount of time. [Set time via AUTO_LEAVE_ASSISTANT_TIME]
