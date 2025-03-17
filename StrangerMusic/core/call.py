@@ -13,7 +13,6 @@ from pyrogram.types import InlineKeyboardMarkup
 from pyrogram.enums import ChatMemberStatus
 from pytgcalls import PyTgCalls
 from pytgcalls.exceptions import (
-    AlreadyJoinedError,
     NoActiveGroupCall,
 )
 from ntgcalls import TelegramServerError
