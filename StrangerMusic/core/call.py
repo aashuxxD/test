@@ -19,7 +19,7 @@ from ntgcalls import TelegramServerError
 from pytgcalls.types import Update, StreamEnded
 from pytgcalls import filters as fl
 from pytgcalls.types import MediaStream,ChatUpdate, Update, GroupCallParticipant
-from pytgcalls.types.stream import StreamAudioEnded
+
 
 import config
 from strings import get_string
