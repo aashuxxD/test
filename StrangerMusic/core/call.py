@@ -17,9 +17,10 @@ from pytgcalls.exceptions import (
     NoActiveGroupCall,
 )
 from ntgcalls import TelegramServerError
+from pytgcalls.types import Update, StreamEnded
 from pytgcalls import filters as fl
 from pytgcalls.types import MediaStream,ChatUpdate, Update, GroupCallParticipant
-from pytgcalls.types.stream import StreamAudioEnded
+
 
 import config
 from strings import get_string
@@ -105,11 +106,11 @@ class Call(PyTgCalls):
     
     async def pause_stream(self, chat_id: int):
         assistant:PyTgCalls = await group_assistant(self, chat_id)
-        await assistant.pause_stream(chat_id)
+        await assistant.pause(chat_id)
 
     async def resume_stream(self, chat_id: int):
         assistant:PyTgCalls = await group_assistant(self, chat_id)
-        await assistant.resume_stream(chat_id)
+        await assistant.resume(chat_id)
 
     async def mute_stream(self, chat_id: int):
         assistant:PyTgCalls = await group_assistant(self, chat_id)
@@ -623,7 +624,7 @@ class Call(PyTgCalls):
         @self.three.on_update(fl.call_participant(GroupCallParticipant.Action.JOINED | GroupCallParticipant.Action.LEFT))
         @self.four.on_update(fl.call_participant(GroupCallParticipant.Action.JOINED | GroupCallParticipant.Action.LEFT))
         @self.five.on_update(fl.call_participant(GroupCallParticipant.Action.JOINED | GroupCallParticipant.Action.LEFT))
-        async def participants_change_handler(client:PyTgCalls, update: Update):
+        async def stream_end_handler1(client:PyTgCalls, update: StreamEnded):
             chat_id = update.chat_id
             users = counter.get(chat_id)
             if not users:
