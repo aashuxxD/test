@@ -113,11 +113,11 @@ class Call(PyTgCalls):
 
     async def mute_stream(self, chat_id: int):
         assistant:PyTgCalls = await group_assistant(self, chat_id)
-        await assistant.mute_stream(chat_id)
+        await assistant.mute(chat_id)
 
     async def unmute_stream(self, chat_id: int):
         assistant:PyTgCalls = await group_assistant(self, chat_id)
-        await assistant.unmute_stream(chat_id)
+        await assistant.unmute(chat_id)
 
     async def stop_stream(self, chat_id: int):
         assistant:PyTgCalls = await group_assistant(self, chat_id)
@@ -608,14 +608,12 @@ class Call(PyTgCalls):
         async def stream_services_handler(client, update: Update):
             await self.stop_stream(update.chat_id)
 
-        @self.one.on_update(fl.stream_end)
-        @self.two.on_update(fl.stream_end)
-        @self.three.on_update(fl.stream_end)
-        @self.four.on_update(fl.stream_end)
-        @self.five.on_update(fl.stream_end)
-        async def stream_end_handler1(client:PyTgCalls, update: Update):
-            if not isinstance(update, StreamAudioEnded):
-                return
+        @self.one.on_update(fl.stream_end())
+        @self.two.on_update(fl.stream_end())
+        @self.three.on_update(fl.stream_end())
+        @self.four.on_update(fl.stream_end())
+        @self.five.on_update(fl.stream_end())
+        async def stream_end_handler1(client:PyTgCalls, update: StreamEnded):
             await self.change_stream(client, update.chat_id)
 
         @self.one.on_update(fl.call_participant(GroupCallParticipant.Action.JOINED | GroupCallParticipant.Action.LEFT))
@@ -623,7 +621,7 @@ class Call(PyTgCalls):
         @self.three.on_update(fl.call_participant(GroupCallParticipant.Action.JOINED | GroupCallParticipant.Action.LEFT))
         @self.four.on_update(fl.call_participant(GroupCallParticipant.Action.JOINED | GroupCallParticipant.Action.LEFT))
         @self.five.on_update(fl.call_participant(GroupCallParticipant.Action.JOINED | GroupCallParticipant.Action.LEFT))
-        async def stream_end_handler1(client:PyTgCalls, update: StreamEnded):
+        async def participants_change_handler(client:PyTgCalls, update: Update):
             chat_id = update.chat_id
             users = counter.get(chat_id)
             if not users:
