@@ -172,16 +172,16 @@ autoclean = []
 file_cache: dict[str, float] = {}
 
 # Images
-START_IMG_URL ="https://iili.io/2rrDdfS.jpg"
+START_IMG_URL ="https://telegra.ph/file/e7ef690f27d84b0170924.jpg"
 
 
-PING_IMG_URL = "https://iili.io/2rrDKJe.jpg"
+PING_IMG_URL = "https://telegra.ph/file/e7ef690f27d84b0170924.jpg"
 
 PLAYLIST_IMG_URL = "https://iili.io/2rrDRdF.jpg"
 
 GLOBAL_IMG_URL = "https://graph.org/file/451add95a90955a01b6b0.jpg"
 
-STATS_IMG_URL = "https://graph.org/file/5f3d0d2c8e35a037e4663.jpg"
+STATS_IMG_URL = "https://telegra.ph/file/e7ef690f27d84b0170924.jpg"
 
 TELEGRAM_AUDIO_URL = "https://graph.org/file/ca76280b0610c31f20051.jpg"
 
